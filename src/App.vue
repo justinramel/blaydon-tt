@@ -32,7 +32,7 @@
           :selectable=true>
 
           <b-table-column field="Name" label="Name" sortable/>
-          <b-table-column field="Category" label="Category" width="50" sortable/>
+          <b-table-column field="Category" label="Category" width="50" sortable :format="formatCategory"/>
           <b-table-column field="Round 1" label="1" sortable/>
           <b-table-column field="Round 2" label="2" sortable/>
           <b-table-column field="Round 3" label="3" sortable/>
@@ -62,6 +62,13 @@
       return {
         headers: [],
         category: '*',
+        categories: {
+          W: 'Women',
+          S: 'Seniors',
+          V: 'Vets',
+          R: 'Race Team',
+          TT: 'TT'
+        },
         results: [],
         filteredResults: []
       }
@@ -93,6 +100,9 @@
       filter (category) {
         this.category = category
         this.filteredResults = this.results.filter(value => category === '*' ? true : value.Category === category)
+      },
+      formatCategory (category) {
+        return this.categories[category]
       }
     }
   }

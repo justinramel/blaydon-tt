@@ -11,12 +11,12 @@
         <nav class="tabs is-boxed">
           <div class="container">
             <ul>
-              <li class="is-active"><a>All</a></li>
-              <li class=""><a>Women</a></li>
-              <li class=""><a>Senior</a></li>
-              <li class=""><a>Vets</a></li>
-              <li class=""><a>Race Team</a></li>
-              <li class=""><a>TT</a></li>
+              <li v-bind:class="{ 'is-active': category === '*'}"><a v-on:click="filter('*')">All</a></li>
+              <li v-bind:class="{ 'is-active': category === 'W'}"><a v-on:click="filter('W')">Women</a></li>
+              <li v-bind:class="{ 'is-active': category === 'S'}"><a v-on:click="filter('S')">Senior</a></li>
+              <li v-bind:class="{ 'is-active': category === 'V'}"><a v-on:click="filter('V')">Vets</a></li>
+              <li v-bind:class="{ 'is-active': category === 'R'}"><a v-on:click="filter('R')">Race Team</a></li>
+              <li v-bind:class="{ 'is-active': category === 'TT'}"><a v-on:click="filter('TT')">TT</a></li>
             </ul>
           </div>
         </nav>
@@ -25,12 +25,11 @@
 
     <div class="container">
       <b-table
-          :data="results"
-          bordered=true
-          striped=true
-          narrowed=true
-          selectable=true
-          default-sort="Name">
+          :data="filteredResults"
+          :bordered=true
+          :striped=true
+          :narrowed=true
+          :selectable=true>
 
           <b-table-column field="Name" label="Name" sortable/>
           <b-table-column field="Category" label="Category" width="50" sortable/>
@@ -62,7 +61,9 @@
     data () {
       return {
         headers: [],
-        results: []
+        category: '*',
+        results: [],
+        filteredResults: []
       }
     },
     created () {
@@ -80,11 +81,19 @@
           this.each(function (row) {
             that.results.push(row)
           })
+          that.filteredResults = that.results
         },
-        error: function () {
+        error: function (err) {
+          console.dir(err)
           console.log('Are you sure you are connected to the internet?')
         }
       })
+    },
+    methods: {
+      filter (category) {
+        this.category = category
+        this.filteredResults = this.results.filter(value => category === '*' ? true : value.Category === category)
+      }
     }
   }
 

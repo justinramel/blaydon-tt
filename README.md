@@ -1,6 +1,6 @@
 # blaydon-tt
 
-> Blaydon TT Times
+> Blaydon TT Results
 
 ## Build Setup
 

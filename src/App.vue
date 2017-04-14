@@ -35,14 +35,14 @@
 
             <b-table-column field="Name" label="Name" sortable/>
             <b-table-column field="Category" label="Category" width="50" sortable :format="formatCategory"/>
-            <b-table-column field="Round 1" label="1" sortable :custom-sort="sortRound1"/>
-            <b-table-column field="Round 2" label="2" sortable :custom-sort="sortRound2"/>
-            <b-table-column field="Round 3" label="3" sortable :custom-sort="sortRound3"/>
-            <b-table-column field="Round 4" label="4" sortable :custom-sort="sortRound4"/>
-            <b-table-column field="Round 5" label="5" sortable :custom-sort="sortRound5"/>
-            <b-table-column field="Round 6" label="6" sortable :custom-sort="sortRound6"/>
-            <b-table-column field="Round 7" label="7" sortable :custom-sort="sortRound7"/>
-            <b-table-column field="Round 8" label="8" sortable :custom-sort="sortRound8"/>
+            <b-table-column field="Round 1" label="1" sortable :custom-sort="sortRound1" :format="formatTime"/>
+            <b-table-column field="Round 2" label="2" sortable :custom-sort="sortRound2" :format="formatTime"/>
+            <b-table-column field="Round 3" label="3" sortable :custom-sort="sortRound3" :format="formatTime"/>
+            <b-table-column field="Round 4" label="4" sortable :custom-sort="sortRound4" :format="formatTime"/>
+            <b-table-column field="Round 5" label="5" sortable :custom-sort="sortRound5" :format="formatTime"/>
+            <b-table-column field="Round 6" label="6" sortable :custom-sort="sortRound6" :format="formatTime"/>
+            <b-table-column field="Round 7" label="7" sortable :custom-sort="sortRound7" :format="formatTime"/>
+            <b-table-column field="Round 8" label="8" sortable :custom-sort="sortRound8" :format="formatTime"/>
         </b-table>
       </div>
     </div>
@@ -106,6 +106,10 @@
       },
       formatCategory (category) {
         return this.categories[category]
+      },
+      formatTime (time) {
+        if (!isNumeric(time)) return time
+        return parseFloat(Math.round(time * 100) / 100).toFixed(2)
       },
       sortRound1: sortTime('Round 1'),
       sortRound2: sortTime('Round 2'),

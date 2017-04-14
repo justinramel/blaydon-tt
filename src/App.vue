@@ -6,7 +6,7 @@
           <div class="columns">
             <div class="column is-two-thirds">
               <h1 class="title">Blaydon CC</h1>
-              <h2 class="subtitle">Club Time Trial</h2>
+              <h2 class="subtitle">Club Time Trial 2016</h2>
             </div>
             <div class="column">
               <h1 class="title">Leaderboard</h1>
@@ -99,10 +99,7 @@
         importer: Miso.Dataset.Importers.GoogleSpreadsheet,
         parser: Miso.Dataset.Parsers.GoogleSpreadsheet,
         key: '1G9nHxp6P_jrfzNzfrV8CMhclA-g3HqS5ccNBAyncAAk',
-        worksheet: '1',
-        extract: function (data) {
-          debugger
-        }
+        worksheet: '1'
       })
 
       ds.fetch({

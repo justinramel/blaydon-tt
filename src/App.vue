@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="hero is-danger is-bold">
+    <div class="hero is-primary">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">Blaydon CC</h1>
@@ -23,40 +23,34 @@
       </div>
     </div>
 
-<div class="container">
-
-  <b-table
-      :data="results"
-      bordered=true
-      striped=true
-      narrowed=true
-      selectable=true
-      default-sort="Name">
-
-      <b-table-column field="Name" label="Name" sortable></b-table-column>
-      <b-table-column field="Category" label="Category" width="50" sortable></b-table-column>
-      <b-table-column field="Round 1" label="1" sortable></b-table-column>
-      <b-table-column field="Round 2" label="2" sortable></b-table-column>
-      <b-table-column field="Round 3" label="3" sortable></b-table-column>
-      <b-table-column field="Round 4" label="4" sortable></b-table-column>
-      <b-table-column field="Round 5" label="5" sortable></b-table-column>
-      <b-table-column field="Round 6" label="6" sortable></b-table-column>
-      <b-table-column field="Round 7" label="7" sortable></b-table-column>
-      <b-table-column field="Round 8" label="8" sortable></b-table-column>
-
-  </b-table>
-
-</div>
-
-
-
-  <footer class="footer">
     <div class="container">
-      <div class="content">
-        <p>Made with <span class="icon is-unselectable is-danger"><i class="mdi">favorite</i></span> by <a href="https://twitter.com/justinramel" target="_blank">Justin Ramel</a>.</p> <p>
-        </p>
+      <b-table
+          :data="results"
+          bordered=true
+          striped=true
+          narrowed=true
+          selectable=true
+          default-sort="Name">
+
+          <b-table-column field="Name" label="Name" sortable/>
+          <b-table-column field="Category" label="Category" width="50" sortable/>
+          <b-table-column field="Round 1" label="1" sortable/>
+          <b-table-column field="Round 2" label="2" sortable/>
+          <b-table-column field="Round 3" label="3" sortable/>
+          <b-table-column field="Round 4" label="4" sortable/>
+          <b-table-column field="Round 5" label="5" sortable/>
+          <b-table-column field="Round 6" label="6" sortable/>
+          <b-table-column field="Round 7" label="7" sortable/>
+          <b-table-column field="Round 8" label="8" sortable/>
+      </b-table>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="content">
+          <p>Made by <a href="https://twitter.com/justinramel" target="_blank">Justin Ramel</a>.</p>
+          </div>
         </div>
-      </div>
     </footer>
   </section>
 </template>
@@ -97,16 +91,25 @@
 </script>
 
 <style lang="sass">
-// Import Bulma's core
-@import "~bulma/sass/utilities/_all";
-
+@import "~bulma/sass/utilities/_all"
 // Set your colors
-$primary: #a6192e;
-$primary-invert: findColorInvert($primary);
+$blaydon: #a6192e
+$primary: $blaydon
+$primary-invert: findColorInvert($primary)
+
 
 // Links
-$link: $primary;
-$link-invert: $primary-invert;
-$link-focus-border: $primary;
+$link: $primary
+$link-invert: $primary-invert
+$link-focus-border: $primary
 
+@import "~bulma"
+@import "~buefy/src/scss/buefy"
+
+.hero.is-primary
+    background-color: $blaydon
+    color: #fff
+
+.hero.is-primary .tabs.is-boxed li.is-active a, .hero.is-primary .tabs.is-boxed li.is-active a:hover, .hero.is-primary .tabs.is-toggle li.is-active a, .hero.is-primary .tabs.is-toggle li.is-active a:hover
+    color: $blaydon !important
 </style>

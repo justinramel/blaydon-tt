@@ -14,7 +14,7 @@
               <li v-bind:class="{ 'is-active': category === '*'}"><a v-on:click="filter('*')">All</a></li>
               <li v-bind:class="{ 'is-active': category === 'W'}"><a v-on:click="filter('W')">Women</a></li>
               <li v-bind:class="{ 'is-active': category === 'S'}"><a v-on:click="filter('S')">Senior</a></li>
-              <li v-bind:class="{ 'is-active': category === 'V'}"><a v-on:click="filter('V')">Vets</a></li>
+              <li v-bind:class="{ 'is-active': category === 'V'}"><a v-on:click="filter('V')">Vet</a></li>
               <li v-bind:class="{ 'is-active': category === 'R'}"><a v-on:click="filter('R')">Race Team</a></li>
               <li v-bind:class="{ 'is-active': category === 'TT'}"><a v-on:click="filter('TT')">TT</a></li>
             </ul>
@@ -43,6 +43,7 @@
             <b-table-column field="Round 6" label="6" sortable :custom-sort="sortRound6" :format="formatTime"/>
             <b-table-column field="Round 7" label="7" sortable :custom-sort="sortRound7" :format="formatTime"/>
             <b-table-column field="Round 8" label="8" sortable :custom-sort="sortRound8" :format="formatTime"/>
+            <b-table-column field="Best 2 (MMM:SS)" label="Best 2" sortable :custom-sort="sortBest" :format="formatTime"/>
         </b-table>
       </div>
     </div>
@@ -67,8 +68,8 @@
         category: '*',
         categories: {
           W: 'Women',
-          S: 'Seniors',
-          V: 'Vets',
+          S: 'Senior',
+          V: 'Vet',
           R: 'Race Team',
           TT: 'TT'
         },
@@ -82,7 +83,10 @@
         importer: Miso.Dataset.Importers.GoogleSpreadsheet,
         parser: Miso.Dataset.Parsers.GoogleSpreadsheet,
         key: '1G9nHxp6P_jrfzNzfrV8CMhclA-g3HqS5ccNBAyncAAk',
-        worksheet: '1'
+        worksheet: '1',
+        extract: function (data) {
+          debugger
+        }
       })
 
       ds.fetch({
@@ -91,11 +95,11 @@
           this.each(function (row) {
             that.results.push(row)
           })
+          that.results.sort(sortTime('Best 2 (MMM:SS)'))
           that.filteredResults = that.results
         },
         error: function (err) {
-          console.dir(err)
-          console.log('Are you sure you are connected to the internet?')
+          console.log(err)
         }
       })
     },
@@ -118,7 +122,8 @@
       sortRound5: sortTime('Round 5'),
       sortRound6: sortTime('Round 6'),
       sortRound7: sortTime('Round 7'),
-      sortRound8: sortTime('Round 8')
+      sortRound8: sortTime('Round 8'),
+      sortBest: sortTime('Best 2 (MMM:SS)')
     }
   }
 

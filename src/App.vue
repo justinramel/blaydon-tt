@@ -24,24 +24,27 @@
     </div>
 
     <div class="container">
-      <b-table
-          :data="filteredResults"
-          :bordered=true
-          :striped=true
-          :narrowed=true
-          :selectable=true>
+      <div class="content">
+        <br>
+        <b-table
+            :data="filteredResults"
+            :bordered=true
+            :striped=true
+            :narrowed=true
+            :selectable=true>
 
-          <b-table-column field="Name" label="Name" sortable/>
-          <b-table-column field="Category" label="Category" width="50" sortable :format="formatCategory"/>
-          <b-table-column field="Round 1" label="1" sortable/>
-          <b-table-column field="Round 2" label="2" sortable/>
-          <b-table-column field="Round 3" label="3" sortable/>
-          <b-table-column field="Round 4" label="4" sortable/>
-          <b-table-column field="Round 5" label="5" sortable/>
-          <b-table-column field="Round 6" label="6" sortable/>
-          <b-table-column field="Round 7" label="7" sortable/>
-          <b-table-column field="Round 8" label="8" sortable/>
-      </b-table>
+            <b-table-column field="Name" label="Name" sortable/>
+            <b-table-column field="Category" label="Category" width="50" sortable :format="formatCategory"/>
+            <b-table-column field="Round 1" label="1" sortable :custom-sort="sortRound1"/>
+            <b-table-column field="Round 2" label="2" sortable :custom-sort="sortRound2"/>
+            <b-table-column field="Round 3" label="3" sortable :custom-sort="sortRound3"/>
+            <b-table-column field="Round 4" label="4" sortable :custom-sort="sortRound4"/>
+            <b-table-column field="Round 5" label="5" sortable :custom-sort="sortRound5"/>
+            <b-table-column field="Round 6" label="6" sortable :custom-sort="sortRound6"/>
+            <b-table-column field="Round 7" label="7" sortable :custom-sort="sortRound7"/>
+            <b-table-column field="Round 8" label="8" sortable :custom-sort="sortRound8"/>
+        </b-table>
+      </div>
     </div>
 
     <footer class="footer">
@@ -103,8 +106,30 @@
       },
       formatCategory (category) {
         return this.categories[category]
-      }
+      },
+      sortRound1: sortTime('Round 1'),
+      sortRound2: sortTime('Round 2'),
+      sortRound3: sortTime('Round 3'),
+      sortRound4: sortTime('Round 4'),
+      sortRound5: sortTime('Round 5'),
+      sortRound6: sortTime('Round 6'),
+      sortRound7: sortTime('Round 7'),
+      sortRound8: sortTime('Round 8')
     }
+  }
+
+  function sortTime (columnName) {
+    return function sort (a, b) {
+      const colA = a[columnName]
+      const colB = b[columnName]
+      if (!isNumeric(colA)) return 1
+      if (!isNumeric(colB)) return -1
+      return colA - colB
+    }
+  }
+
+  function isNumeric (n) {
+    return !isNaN(parseFloat(n)) && isFinite(n)
   }
 
 </script>

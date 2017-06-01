@@ -4,17 +4,25 @@
       <div class="hero-body">
         <div class="container">
           <div class="columns">
-            <div class="column is-two-thirds">
+            <div class="column is-half">
               <h1 class="title">Blaydon CC</h1>
-              <h2 class="subtitle">Club Time Trial 2016</h2>
+              <h2 class="subtitle">Club Time Trial 2017</h2>
+              <p>To compete for a trophy you must:</p>
+              <div class="column is-offset-1">
+                <ul>
+                  <li><b-icon icon="done" type="is-success"></b-icon> 2 x <a href="https://ridewithgps.com/routes/6614834" target="_blank">M12</a></li>
+                  <li><b-icon icon="done" type="is-success"></b-icon> 1 x <a href="https://ridewithgps.com/routes/6836633M2511" target="_blank">M2511</a></li>
+                  <li><b-icon icon="done" type="is-success"></b-icon> 1 x Marshal</li>
+                </ul>
+              </div>
             </div>
             <div class="column">
               <h1 class="title">Leaderboard</h1>
               <table>
                 <tr v-for="result in leaderboard">
                   <td>{{result.category}}</td>
-                  <td>{{result.leader.name}}</td>
-                  <td>{{result.leader.time | formatTime}}</td>
+                  <td>{{result.name}}</td>
+                  <td>{{result.time | formatTime}}</td>
                 </tr>
               </table>
             </div>
@@ -26,11 +34,11 @@
           <div class="container">
             <ul>
               <li v-bind:class="{ 'is-active': category === '*'}"><a v-on:click="filter('*')">All</a></li>
-              <li v-bind:class="{ 'is-active': category === 'W'}"><a v-on:click="filter('W')">Women</a></li>
-              <li v-bind:class="{ 'is-active': category === 'S'}"><a v-on:click="filter('S')">Senior</a></li>
-              <li v-bind:class="{ 'is-active': category === 'V'}"><a v-on:click="filter('V')">Vet</a></li>
-              <li v-bind:class="{ 'is-active': category === 'R'}"><a v-on:click="filter('R')">Race Team</a></li>
-              <li v-bind:class="{ 'is-active': category === 'TT'}"><a v-on:click="filter('TT')">TT</a></li>
+              <li v-bind:class="{ 'is-active': category === 'Women'}"><a v-on:click="filter('Women')">Women</a></li>
+              <li v-bind:class="{ 'is-active': category === 'Senior Road'}"><a v-on:click="filter('Senior Road')">Senior Road</a></li>
+              <li v-bind:class="{ 'is-active': category === 'Vet Road'}"><a v-on:click="filter('Vet Road')">Vet Road</a></li>
+              <li v-bind:class="{ 'is-active': category === 'Senior TT'}"><a v-on:click="filter('Senior TT')">Senior TT</a></li>
+              <li v-bind:class="{ 'is-active': category === 'Vet TT'}"><a v-on:click="filter('Vet TT')">Vet TT</a></li>
             </ul>
           </div>
         </nav>
@@ -42,23 +50,42 @@
           <div class="icon-at-kom-1"></div>
         <br>
         <b-table
-            :data="filteredResults"
-            :bordered=true
-            :striped=true
-            :narrowed=true
-            :selectable=true>
+          :data="filteredResults"
+          :bordered=true
+          :striped=true
+          :narrowed=true
+          :selectable=true>
 
-            <b-table-column field="Name" label="Name" sortable/>
-            <b-table-column field="Category" label="Category" width="50" sortable :format="formatCategory"/>
-            <b-table-column field="Round 1" label="1" sortable :custom-sort="sortRound1" :format="formatTime"/>
-            <b-table-column field="Round 2" label="2" sortable :custom-sort="sortRound2" :format="formatTime"/>
-            <b-table-column field="Round 3" label="3" sortable :custom-sort="sortRound3" :format="formatTime"/>
-            <b-table-column field="Round 4" label="4" sortable :custom-sort="sortRound4" :format="formatTime"/>
-            <b-table-column field="Round 5" label="5" sortable :custom-sort="sortRound5" :format="formatTime"/>
-            <b-table-column field="Round 6" label="6" sortable :custom-sort="sortRound6" :format="formatTime"/>
-            <b-table-column field="Round 7" label="7" sortable :custom-sort="sortRound7" :format="formatTime"/>
-            <b-table-column field="Round 8" label="8" sortable :custom-sort="sortRound8" :format="formatTime"/>
-            <b-table-column field="Best 2 (MMM:SS)" label="Best 2" sortable :custom-sort="sortBest" :format="formatTime"/>
+          <template scope="props">
+            <b-table-column field="Name" label="Name" sortable>
+              {{ props.row.Name }}
+            </b-table-column>
+            <b-table-column field="M12 Best" label="M12 Best" sortable :custom-sort="sortM12Best" :format="formatTime">
+              {{ props.row['M12 Best'] }}
+            </b-table-column>
+            <b-table-column field="M12 2nd Best" label="M12 2nd Best" sortable :custom-sort="sortM122ndBest" :format="formatTime">
+              {{ props.row['M12 2nd Best'] }}
+            </b-table-column>
+            <b-table-column field="M2511" label="M2511" sortable :custom-sort="sortM2511" :format="formatTime">
+              {{ props.row.M2511 }}
+            </b-table-column>
+            <b-table-column field="Total" label="Total" sortable :custom-sort="sortTotal" :format="formatTime">
+              {{ props.row.Total }}
+            </b-table-column>
+            <b-table-column field="Category" label="Category" sortable>
+              {{ props.row.Category }}
+            </b-table-column>
+            <b-table-column field="Marshalled" label="Marshal" width="1" sortable>
+              <center>
+                <b-icon :icon="props.row.Marshalled === 'Y' ? 'done' : ''" type="is-success"></b-icon>
+              </center>
+            </b-table-column>
+            <b-table-column label="Complete" width="1" sortable>
+              <center>
+                <b-icon :icon="complete(props.row) ? 'done_all' : ''" type="is-success"></b-icon>
+              </center>
+            </b-table-column>
+          </template>
         </b-table>
       </div>
     </div>
@@ -81,13 +108,6 @@
       return {
         headers: [],
         category: '*',
-        categories: {
-          W: 'Women',
-          S: 'Senior',
-          V: 'Vet',
-          R: 'Race Team',
-          TT: 'TT'
-        },
         results: [],
         filteredResults: [],
         leaderboard: []
@@ -98,7 +118,7 @@
       const ds = new Miso.Dataset({
         importer: Miso.Dataset.Importers.GoogleSpreadsheet,
         parser: Miso.Dataset.Parsers.GoogleSpreadsheet,
-        key: '1G9nHxp6P_jrfzNzfrV8CMhclA-g3HqS5ccNBAyncAAk',
+        key: '1gcSCNA-MhatgS8UhmYbcwhewpiu8wd2-a9YLqOC7T0A',
         worksheet: '1'
       })
 
@@ -108,7 +128,7 @@
           this.each(function (row) {
             that.results.push(row)
           })
-          that.results.sort(sortTime('Best 2 (MMM:SS)'))
+          that.results.sort(sortByLeader)
           that.leaderboard = createLeaderboard(that.results)
           that.filteredResults = that.results
         },
@@ -122,19 +142,12 @@
         this.category = category
         this.filteredResults = this.results.filter(value => category === '*' ? true : value.Category === category)
       },
-      formatCategory (category) {
-        return this.categories[category]
-      },
       formatTime: formatTime,
-      sortRound1: sortTime('Round 1'),
-      sortRound2: sortTime('Round 2'),
-      sortRound3: sortTime('Round 3'),
-      sortRound4: sortTime('Round 4'),
-      sortRound5: sortTime('Round 5'),
-      sortRound6: sortTime('Round 6'),
-      sortRound7: sortTime('Round 7'),
-      sortRound8: sortTime('Round 8'),
-      sortBest: sortTime('Best 2 (MMM:SS)')
+      complete: complete,
+      sortM12Best: sortTime('M12 Best'),
+      sortM122ndBest: sortTime('M12 2nd Best'),
+      sortM2511: sortTime('M2511'),
+      sortTotal: sortTime('Total')
     },
     filters: {
       formatTime: formatTime
@@ -148,33 +161,61 @@
 
   function sortTime (columnName) {
     return function sort (a, b) {
-      const colA = a[columnName]
-      const colB = b[columnName]
-      if (!isNumeric(colA)) return 1
-      if (!isNumeric(colB)) return -1
-      return colA - colB
+      return asDate(a[columnName]) - asDate(b[columnName])
     }
+  }
+
+  function sortByLeader (a, b) {
+    if (complete(a) && complete(b)) {
+      return asDate(a.Total) - asDate(b.Total)
+    }
+    if (complete(a)) return -1
+    if (complete(b)) return 1
+
+    if (notMarshalled(a) && notMarshalled(b)) {
+      return asDate(a.Total) - asDate(b.Total)
+    }
+    if (notMarshalled(a)) return -1
+    if (notMarshalled(b)) return 1
+
+    if (m12Complete(a) && m12Complete(b)) {
+      return asDate(a.Total) - asDate(b.Total)
+    }
+    if (m12Complete(a)) return -1
+    if (m12Complete(b)) return 1
+
+    return asDate(a['M12 Best']) - asDate(b['M12 Best'])
+  }
+
+  function asDate (result = '') {
+    if (result === null) result = ''
+    const time = result.length === 8 ? result : `0${result}`
+    return new Date(`Wed Apr 26 2017 ${time} GMT+0100 (BST)`)
   }
 
   function isNumeric (n) {
     return !isNaN(parseFloat(n)) && isFinite(n)
   }
 
+  function empty (data) {
+    return (!data || data.length === 0)
+  }
+
   function createLeaderboard (results) {
     return [
-      {category: 'Women', leader: first(results.filter(r => r.Category === 'W'))},
-      {category: 'Senior', leader: first(results.filter(r => r.Category === 'S'))},
-      {category: 'Vet', leader: first(results.filter(r => r.Category === 'V'))},
-      {category: 'Race Team', leader: first(results.filter(r => r.Category === 'R'))},
-      {category: 'TT', leader: first(results.filter(r => r.Category === 'TT'))}
-    ]
+      {category: 'Women', ...first(results.filter(r => r.Category === 'Women'))},
+      {category: 'Senior Road', ...first(results.filter(r => r.Category === 'Senior Road'))},
+      {category: 'Vet Road', ...first(results.filter(r => r.Category === 'Vet Road'))},
+      {category: 'Senior TT', ...first(results.filter(r => r.Category === 'Senior TT'))},
+      {category: 'Vet TT', ...first(results.filter(r => r.Category === 'Vet TT'))}
+    ].sort(sortTime('time'))
   }
 
   function first (results) {
     if (results instanceof Array && results.length > 0) {
       return {
         name: results[0].Name,
-        time: results[0]['Best 2 (MMM:SS)']
+        time: results[0]['Total']
       }
     } else {
       return {
@@ -182,6 +223,16 @@
         time: '--.--'
       }
     }
+  }
+
+  function complete (result) {
+    return !empty(result['M12 Best']) && !empty(result['M12 2nd Best']) && !empty(result['M2511']) && result['Marshalled'] === 'Y'
+  }
+  function notMarshalled (result) {
+    return !empty(result['M12 Best']) && !empty(result['M12 2nd Best']) && !empty(result['M2511'])
+  }
+  function m12Complete (result) {
+    return !empty(result['M12 Best']) && !empty(result['M12 2nd Best'])
   }
 </script>
 

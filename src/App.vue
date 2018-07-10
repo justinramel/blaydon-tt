@@ -6,12 +6,11 @@
           <div class="columns">
             <div class="column is-half">
               <h1 class="title">Blaydon CC</h1>
-              <h2 class="subtitle">Club Time Trial 2017</h2>
+              <h2 class="subtitle">Club Time Trial 2018</h2>
               <p>To compete for a trophy you must:</p>
               <div class="column is-offset-1">
                 <ul>
-                  <li><b-icon icon="done" type="is-success"></b-icon> 2 x <a href="https://ridewithgps.com/routes/6614834" target="_blank">M12</a></li>
-                  <li><b-icon icon="done" type="is-success"></b-icon> 1 x <a href="https://ridewithgps.com/routes/6836633M2511" target="_blank">M2511</a></li>
+                  <li><b-icon icon="done" type="is-success"></b-icon> 3 x <a href="https://ridewithgps.com/routes/6614834" target="_blank">M12</a></li>
                   <li><b-icon icon="done" type="is-success"></b-icon> 1 x Marshal</li>
                 </ul>
               </div>
@@ -66,7 +65,7 @@
             <b-table-column field="M12 2nd Best" label="M12 2nd Best" sortable :custom-sort="sortM122ndBest" :format="formatTime">
               {{ props.row['M12 2nd Best'] }}
             </b-table-column>
-            <b-table-column field="M2511" label="M2511" sortable :custom-sort="sortM2511" :format="formatTime">
+            <b-table-column field="M2511" label="M12 3rd Best" sortable :custom-sort="sortM2511" :format="formatTime">
               {{ props.row.M2511 }}
             </b-table-column>
             <b-table-column field="Total" label="Total" sortable :custom-sort="sortTotal" :format="formatTime">

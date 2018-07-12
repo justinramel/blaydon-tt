@@ -65,8 +65,8 @@
             <b-table-column field="M12 2nd Best" label="M12 2nd Best" sortable :custom-sort="sortM122ndBest" :format="formatTime">
               {{ props.row['M12 2nd Best'] }}
             </b-table-column>
-            <b-table-column field="M2511" label="M12 3rd Best" sortable :custom-sort="sortM2511" :format="formatTime">
-              {{ props.row.M2511 }}
+            <b-table-column field="M12 3rd Best" label="M12 3rd Best" sortable :custom-sort="sortM123rdBest" :format="formatTime">
+              {{ props.row['M12 3rd Best'] }}
             </b-table-column>
             <b-table-column field="Total" label="Total" sortable :custom-sort="sortTotal" :format="formatTime">
               {{ props.row.Total }}
@@ -145,7 +145,7 @@
       complete: complete,
       sortM12Best: sortTime('M12 Best'),
       sortM122ndBest: sortTime('M12 2nd Best'),
-      sortM2511: sortTime('M2511'),
+      sortM123rdBest: sortTime('M12 3rd Best'),
       sortTotal: sortTime('Total')
     },
     filters: {
@@ -225,10 +225,10 @@
   }
 
   function complete (result) {
-    return !empty(result['M12 Best']) && !empty(result['M12 2nd Best']) && !empty(result['M2511']) && result['Marshalled'] === 'Y'
+    return !empty(result['M12 Best']) && !empty(result['M12 2nd Best']) && !empty(result['M12 3rd Best']) && result['Marshalled'] === 'Y'
   }
   function notMarshalled (result) {
-    return !empty(result['M12 Best']) && !empty(result['M12 2nd Best']) && !empty(result['M2511'])
+    return !empty(result['M12 Best']) && !empty(result['M12 2nd Best']) && !empty(result['M12 3rd Best'])
   }
   function m12Complete (result) {
     return !empty(result['M12 Best']) && !empty(result['M12 2nd Best'])

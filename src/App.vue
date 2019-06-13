@@ -6,7 +6,7 @@
           <div class="columns">
             <div class="column is-half">
               <h1 class="title">Blaydon CC</h1>
-              <h2 class="subtitle">Club Time Trial 2018</h2>
+              <h2 class="subtitle">Club Time Trial 2019</h2>
               <p>To compete for a trophy you must:</p>
               <div class="column is-offset-1">
                 <ul>
@@ -33,10 +33,12 @@
           <div class="container">
             <ul>
               <li v-bind:class="{ 'is-active': category === '*'}"><a v-on:click="filter('*')">All</a></li>
-              <li v-bind:class="{ 'is-active': category === 'Women'}"><a v-on:click="filter('Women')">Women</a></li>
+              <li v-bind:class="{ 'is-active': category === 'Women Road'}"><a v-on:click="filter('Women Road')">Women Road</a></li>
+              <li v-bind:class="{ 'is-active': category === 'Women TT'}"><a v-on:click="filter('Women TT')">Women TT</a></li>
+              <li v-bind:class="{ 'is-active': category === 'Women Vet'}"><a v-on:click="filter('Women Vet')">Women Vet</a></li>
               <li v-bind:class="{ 'is-active': category === 'Senior Road'}"><a v-on:click="filter('Senior Road')">Senior Road</a></li>
-              <li v-bind:class="{ 'is-active': category === 'Vet Road'}"><a v-on:click="filter('Vet Road')">Vet Road</a></li>
               <li v-bind:class="{ 'is-active': category === 'Senior TT'}"><a v-on:click="filter('Senior TT')">Senior TT</a></li>
+              <li v-bind:class="{ 'is-active': category === 'Vet Road'}"><a v-on:click="filter('Vet Road')">Vet Road</a></li>
               <li v-bind:class="{ 'is-active': category === 'Vet TT'}"><a v-on:click="filter('Vet TT')">Vet TT</a></li>
             </ul>
           </div>
@@ -202,10 +204,12 @@
 
   function createLeaderboard (results) {
     return [
-      {category: 'Women', ...first(results.filter(r => r.Category === 'Women'))},
+      {category: 'Women Road', ...first(results.filter(r => r.Category === 'Women Road'))},
+      {category: 'Women TT', ...first(results.filter(r => r.Category === 'Women TT'))},
+      {category: 'Women Vet', ...first(results.filter(r => r.Category === 'Women Vet'))},
       {category: 'Senior Road', ...first(results.filter(r => r.Category === 'Senior Road'))},
-      {category: 'Vet Road', ...first(results.filter(r => r.Category === 'Vet Road'))},
       {category: 'Senior TT', ...first(results.filter(r => r.Category === 'Senior TT'))},
+      {category: 'Vet Road', ...first(results.filter(r => r.Category === 'Vet Road'))},
       {category: 'Vet TT', ...first(results.filter(r => r.Category === 'Vet TT'))}
     ].sort(sortTime('time'))
   }

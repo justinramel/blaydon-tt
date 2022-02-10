@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "buefy": "^0.3.2",
-    "node-sass": "^4.5.2",
+    "node-sass": "^7.0.0",
     "sass-loader": "^6.0.3",
     "vue": "^2.2.2",
     "vue-router": "^2.3.0"
